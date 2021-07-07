@@ -3,11 +3,18 @@ package IniUtil
 import (
 	"fmt"
 	"gopkg.in/ini.v1"
+	"os"
+	"path/filepath"
 )
 
 func IniUtil() string {
+	// 获取到当前目录
+	pwd, _ := os.Getwd()
+	fmt.Println("当前的操作路径为:", pwd)
+	//文件路径拼接
+	f1 := filepath.Join(pwd, "conf", "app.ini")
 	//解析ini文件
-	cfg, err := ini.Load("/Users/yaochangjian/go/src/AnalyseFile/conf/app.ini")
+	cfg, err := ini.Load(f1)
 	if err != nil {
 		fmt.Println("文件读取失败: ", err)
 	}
