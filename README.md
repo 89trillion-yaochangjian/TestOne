@@ -9,6 +9,7 @@
 .
 ├── README.md
 ├── StructInfo
+│   ├── Soldier.go
 │   └── ginResult.go
 ├── __pycache__
 │   └── locustfile.cpython-39.pyc
@@ -31,12 +32,11 @@
 │   ├── service
 │   │   └── soldierService.go
 │   └── utils
-│       ├── IniUtil
-│       ├── JsonUtil
-│       └── PathUtil
+│       ├── IniUtil.go
+│       ├── JsonUtil.go
+│       └── PathUtil.go
 ├── locustFile.py
 └── report.html
-
 
 
 
