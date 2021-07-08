@@ -1,19 +1,23 @@
 package service
 
 import (
-	"AnalyseFile/internal/utils/JsonUtil"
+	"AnalyseFile/StructInfo"
+	"AnalyseFile/internal/utils"
 )
 
 /*
 	获取士兵信息
 */
-var soldierMap map[string]JsonUtil.Soldier
 
-func GetSoldierInfo() map[string]JsonUtil.Soldier {
+var SoldierMap map[string]StructInfo.Soldier
+
+func GetSoldierInfo() (map[string]StructInfo.Soldier, *StructInfo.Response) {
 
 	//读取Json文件内容
-	if len(soldierMap) == 0 {
-		soldierMap = JsonUtil.ReadJsonUtil()
+	if len(SoldierMap) == 0 {
+		soldierMapFisrtRece, err := utils.ReadJsonUtil()
+		SoldierMap = soldierMapFisrtRece
+		return SoldierMap, err
 	}
-	return soldierMap
+	return SoldierMap, nil
 }

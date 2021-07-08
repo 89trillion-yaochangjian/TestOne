@@ -4,7 +4,10 @@ import (
 	"AnalyseFile/StructInfo"
 	"AnalyseFile/internal/handler"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
+
+	result "AnalyseFile/StructInfo"
 )
 
 /*
@@ -16,11 +19,13 @@ func RarityFindByID(c *gin.Context) {
 	id := c.Query("id")
 	Rarity, err := handler.RarityFindByIDHandler(id)
 	if err != nil {
-		c.JSON(http.StatusOK, StructInfo.MesInfo{Msg: "根据id获取稀有度失败", ER: err})
+		c.JSON(http.StatusInternalServerError, err)
+		log.Print(err)
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"Rarity": Rarity,
-	})
+	res := StructInfo.Soldier{
+		Rarity: Rarity,
+	}
+	c.JSON(http.StatusOK, result.OK.WithData(res))
 }
 
 /*
@@ -31,11 +36,13 @@ func AtkFindByID(c *gin.Context) {
 	id := c.Query("id")
 	Atk, err := handler.AtkFindByIDHandler(id)
 	if err != nil {
-		c.JSON(http.StatusOK, StructInfo.MesInfo{Msg: "根据id获取战力失败", ER: err})
+		c.JSON(http.StatusInternalServerError, err)
+		log.Print(err)
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"Atk": Atk,
-	})
+	res := StructInfo.Soldier{
+		Atk: Atk,
+	}
+	c.JSON(http.StatusOK, result.OK.WithData(res))
 }
 
 /*
@@ -48,9 +55,10 @@ func SoldierFindALLCycUnlock(c *gin.Context) {
 	unlockArena := c.Query("unlockArena")
 	soldier, err := handler.SoldierFindALLCycUnlockHandler(rarity, cvc, unlockArena)
 	if err != nil {
-		c.JSON(http.StatusOK, StructInfo.MesInfo{Msg: "获取所有失败", ER: err})
+		c.JSON(http.StatusInternalServerError, err)
+		log.Print(err)
 	}
-	c.JSON(http.StatusOK, StructInfo.MesInfo{Msg: "获取士兵成功", Data: soldier})
+	c.JSON(http.StatusOK, result.OK.WithData(soldier))
 }
 
 /*
@@ -61,9 +69,10 @@ func SoldierFindByCyc(c *gin.Context) {
 	cvc := c.Query("cvc")
 	soldier, err := handler.SoldierFindByCycHandler(cvc)
 	if err != nil {
-		c.JSON(http.StatusOK, StructInfo.MesInfo{Msg: "获取所有失败", ER: err})
+		c.JSON(http.StatusInternalServerError, err)
+		log.Print(err)
 	}
-	c.JSON(http.StatusOK, StructInfo.MesInfo{Msg: "获取士兵成功", Data: soldier})
+	c.JSON(http.StatusOK, result.OK.WithData(soldier))
 }
 
 /*
@@ -74,7 +83,8 @@ func SoldierEachStage(c *gin.Context) {
 	unlockArena := c.Query("unlockArena")
 	soldier, err := handler.SoldierEachStageHandler(unlockArena)
 	if err != nil {
-		c.JSON(http.StatusOK, StructInfo.MesInfo{Msg: "获取所有失败", ER: err})
+		c.JSON(http.StatusInternalServerError, err)
+		log.Print(err)
 	}
-	c.JSON(http.StatusOK, StructInfo.MesInfo{Msg: "获取士兵成功", Data: soldier})
+	c.JSON(http.StatusOK, result.OK.WithData(soldier))
 }

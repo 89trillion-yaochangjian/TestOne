@@ -2,13 +2,12 @@ package main
 
 import (
 	"AnalyseFile/internal/router"
-	"AnalyseFile/internal/utils/JsonUtil"
-	"AnalyseFile/internal/utils/PathUtil"
+	"AnalyseFile/internal/utils"
 )
 
 func main() {
-	JsonUtil.ReadJsonUtil()
-	JsonUtil.WriteJsonUtil()
-	PathUtil.PathUtil()
+	utils.ReadJsonUtil()
+	utils.WriteJsonUtil()
+	utils.PathUtil()
 	router.Router()
 }

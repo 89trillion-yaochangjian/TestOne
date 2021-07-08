@@ -1,44 +1,38 @@
-package JsonUtil
+package utils
 
 import (
+	"AnalyseFile/StructInfo"
 	"os"
 	"path/filepath"
 
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 )
 
-type Soldier struct {
-	//定义士兵配置
-	ID          string `json:"id"`
-	Name        string `json:"Name"`
-	UnlockArena string `json:"UnlockArena"`
-	Rarity      string `json:"Rarity"`
-	Atk         string `json:"Atk"`
-	Cvc         string `json:"Cvc"`
-}
+var event map[string]StructInfo.Soldier
 
-var event map[string]Soldier
-
-func ReadJsonUtil() map[string]Soldier {
+func ReadJsonUtil() (map[string]StructInfo.Soldier, *StructInfo.Response) {
 	// 获取到当前目录
-	pwd, _ := os.Getwd()
+	pwd, err1 := os.Getwd()
+	if err1 != nil {
+		return event, StructInfo.FilePathErr
+	}
 	//fmt.Println("当前的操作路径为:",pwd)
 	//文件路径拼接
 	f1 := filepath.Join(pwd, "conf", "new_Soldier.json")
 	//根据路径读取文件
 	b, err := ioutil.ReadFile(f1)
 	if err != nil {
-		fmt.Print("JSON文件读取失败", err)
+		return event, StructInfo.FileReadErr
 	}
-	if err1 := json.Unmarshal(b, &event); err != nil {
-		panic(err1)
+	err2 := json.Unmarshal(b, &event)
+	if err2 != nil {
+		return event, StructInfo.UnmarshalErr
 	}
-	return event
+	return event, nil
 }
 
-func WriteJsonUtil() {
+func WriteJsonUtil() *StructInfo.Response {
 	pwd, _ := os.Getwd() // 获取到当前目录，相当于python里的os.getcwd()
 	//fmt.Println("当前的操作路径为:",pwd)
 	//文件路径拼接
@@ -47,18 +41,16 @@ func WriteJsonUtil() {
 	filePtr, err := os.Create(f1)
 	// 文件创建异常处理
 	if err != nil {
-		fmt.Println("文件创建失败", err)
-		return
+		return StructInfo.FileCreateErr
 	}
 	//结束关闭
 	defer filePtr.Close()
 	//格式化JSON数据
 	data, err := json.MarshalIndent(event, "", "  ")
 	if err != nil {
-		fmt.Println("格式化失败", err)
-	} else {
-		fmt.Println("格式化成功")
+		return StructInfo.UnmarshalErr
 	}
 	//写入文件
 	filePtr.Write(data)
+	return nil
 }

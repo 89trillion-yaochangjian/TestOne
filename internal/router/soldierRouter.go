@@ -2,7 +2,7 @@ package router
 
 import (
 	"AnalyseFile/internal/ctrl"
-	"AnalyseFile/internal/utils/IniUtil"
+	"AnalyseFile/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,7 +18,7 @@ func Router() {
 	r.GET("/SoldierFindByCyc", ctrl.SoldierFindByCyc)
 	//根据每个阶段获取相应士兵
 	r.GET("/SoldierEachStage", ctrl.SoldierEachStage)
-	httpPort := IniUtil.IniUtil()
+	httpPort, _ := utils.IniUtil()
 	r.Run(":" + httpPort)
 
 }
