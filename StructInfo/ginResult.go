@@ -8,7 +8,8 @@ var (
 	FilePathErr   = response(1001, "获取文件路径失败")
 	UnmarshalErr  = response(1003, "序列化失败")
 	FileCreateErr = response(1004, "文件创建失败")
-	GetSoliderErr = response(1004, "获取士兵失败")
+	GetSoliderErr = response(1005, "获取士兵失败")
+	ParamErr      = response(1006, "输入参数有误")
 )
 
 type Response struct {

@@ -3,6 +3,7 @@ package utils
 import (
 	"AnalyseFile/StructInfo"
 	"gopkg.in/ini.v1"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -18,6 +19,7 @@ func IniUtil() (string, *StructInfo.Response) {
 	//解析ini文件
 	cfg, err := ini.Load(f1)
 	if err != nil {
+		log.Print("JSON文件读取失败")
 		return "", StructInfo.FileReadErr
 	}
 	//获取制定端口

@@ -14,12 +14,11 @@
 ├── __pycache__
 │   └── locustfile.cpython-39.pyc
 ├── app
-│   └── http
-│       ├── http
-│       └── httpServer.go
+│   ├── app
+│   └── httpServer.go
 ├── conf
 │   ├── app.ini
-│   ├── new_Soldier.json
+│   ├── newSoldier.json
 │   └── soldier.json
 ├── internal
 │   ├── ctrl
@@ -29,8 +28,6 @@
 │   │   └── soldierHandler_test.go
 │   ├── router
 │   │   └── soldierRouter.go
-│   ├── service
-│   │   └── soldierService.go
 │   └── utils
 │       ├── IniUtil.go
 │       ├── JsonUtil.go
@@ -47,12 +44,11 @@
 
 |层|文件夹|主要职责|调用关系|其他说明|
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|应用层 |app/http/httpServer.go  |服务器启动 |调用路由层工具层   |不可同层调用
+|应用层 |app/httpServer.go  |服务器启动 |调用路由层工具层   |不可同层调用
 |路由层 |internal/router/soldierRouter  |路由转发 | 调用工具层 控制层 被应用层   |不可同层调用
 |控制层 |internal/ctrl/soldierCrtrl  |请求参数处理，响应 | 调用handler层 被路由层调用    |不可同层调用
-|handler层 |internal/handler/soldierHandler  |处理具体业务 | 调用路由层service层，被控制层调用    |不可同层调用
-|service层   |internal/service/soldierService  |处理业务逻辑 | 调用工具层，被handler层调用    |可同层调用
-|工具层  |internal/utils  |文件处理 | 被路由层 ，service层调用  |不可同层调用
+|handler层 |internal/handler/soldierHandler  |处理具体业务 | 调用工具层，被控制层调用    |不可同层调用
+|工具层  |internal/utils  |文件处理 | 被路由层 ，handler层  |不可同层调用
 | 配置文件 |conf  |文件存储 | 不存在调用关系    |不可同层调用
 
 #### 4.存储设计
@@ -87,7 +83,7 @@ go build
 
 `
 编译为可执行文件
-./http --path /Users/yaochangjian/go/src/AnalyseFile/conf/soldier.json
+./app --path /Users/yaochangjian/go/src/AnalyseFile/conf/soldier.json
 `
 
 

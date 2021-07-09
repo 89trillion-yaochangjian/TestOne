@@ -2,7 +2,7 @@ package handler
 
 import (
 	"AnalyseFile/StructInfo"
-	"AnalyseFile/internal/service"
+	"AnalyseFile/internal/utils"
 )
 
 /*
@@ -10,10 +10,7 @@ import (
 */
 
 func RarityFindByIDHandler(id string) (string, *StructInfo.Response) {
-	soldierMap, err := service.GetSoldierInfo()
-	if err != nil {
-		return "", err
-	}
+	soldierMap := utils.Event
 	v, ok := soldierMap[id]
 	if !ok {
 		return "", StructInfo.GetSoliderErr
@@ -26,10 +23,7 @@ func RarityFindByIDHandler(id string) (string, *StructInfo.Response) {
 */
 
 func AtkFindByIDHandler(id string) (string, *StructInfo.Response) {
-	soldierMap, err := service.GetSoldierInfo()
-	if err != nil {
-		return "", err
-	}
+	soldierMap := utils.Event
 	v, ok := soldierMap[id]
 	if !ok {
 		return "", StructInfo.GetSoliderErr
@@ -42,10 +36,7 @@ func AtkFindByIDHandler(id string) (string, *StructInfo.Response) {
 */
 
 func SoldierFindALLCycUnlockHandler(rarity string, cvc string, unlockArena string) ([]StructInfo.Soldier, *StructInfo.Response) {
-	soldierMap, err := service.GetSoldierInfo()
-	if err != nil {
-		return nil, err
-	}
+	soldierMap := utils.Event
 	var soldiers []StructInfo.Soldier
 	for _, soldier := range soldierMap {
 		if rarity == soldier.Rarity && cvc == soldier.Cvc && unlockArena == soldier.UnlockArena {
@@ -60,10 +51,7 @@ func SoldierFindALLCycUnlockHandler(rarity string, cvc string, unlockArena strin
 */
 
 func SoldierFindByCycHandler(cvc string) ([]StructInfo.Soldier, *StructInfo.Response) {
-	soldierMap, err := service.GetSoldierInfo()
-	if err != nil {
-		return nil, err
-	}
+	soldierMap := utils.Event
 	var soldiers []StructInfo.Soldier
 	for _, soldier := range soldierMap {
 		if cvc == soldier.Cvc {
@@ -78,10 +66,7 @@ func SoldierFindByCycHandler(cvc string) ([]StructInfo.Soldier, *StructInfo.Resp
 */
 
 func SoldierEachStageHandler(unlockArena string) ([]StructInfo.Soldier, *StructInfo.Response) {
-	soldierMap, err := service.GetSoldierInfo()
-	if err != nil {
-		return nil, err
-	}
+	soldierMap := utils.Event
 	var soldiers []StructInfo.Soldier
 	for _, soldier := range soldierMap {
 		if unlockArena == soldier.UnlockArena {
