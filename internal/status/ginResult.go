@@ -1,4 +1,4 @@
-package model
+package status
 
 var (
 	OK  = response(200, "ok") // 通用成功

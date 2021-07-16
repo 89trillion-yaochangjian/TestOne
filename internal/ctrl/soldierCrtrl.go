@@ -2,6 +2,7 @@ package ctrl
 
 import (
 	"AnalyseFile/internal/service"
+	"AnalyseFile/internal/status"
 	"github.com/gin-gonic/gin"
 
 	"log"
@@ -18,7 +19,7 @@ func RarityFindByID(c *gin.Context) {
 	//读取Json文件内容
 	id := c.Query("id")
 	if len(id) == 0 {
-		c.JSON(http.StatusInternalServerError, result.ParamErr)
+		c.JSON(http.StatusInternalServerError, status.ParamErr)
 		return
 	}
 	Rarity, err := service.RarityFindByIDHandler(id)
@@ -30,7 +31,7 @@ func RarityFindByID(c *gin.Context) {
 	res := result.Soldier{
 		Rarity: Rarity,
 	}
-	c.JSON(http.StatusOK, result.OK.WithData(res))
+	c.JSON(http.StatusOK, status.OK.WithData(res))
 }
 
 /*
@@ -40,7 +41,7 @@ func RarityFindByID(c *gin.Context) {
 func AtkFindByID(c *gin.Context) {
 	id := c.Query("id")
 	if len(id) == 0 {
-		c.JSON(http.StatusInternalServerError, result.ParamErr)
+		c.JSON(http.StatusInternalServerError, status.ParamErr)
 		return
 	}
 	Atk, err := service.AtkFindByIDHandler(id)
@@ -52,7 +53,7 @@ func AtkFindByID(c *gin.Context) {
 	res := result.Soldier{
 		Atk: Atk,
 	}
-	c.JSON(http.StatusOK, result.OK.WithData(res))
+	c.JSON(http.StatusOK, status.OK.WithData(res))
 }
 
 /*
@@ -64,7 +65,7 @@ func SoldierFindALLCycUnlock(c *gin.Context) {
 	cvc := c.Query("cvc")
 	unlockArena := c.Query("unlockArena")
 	if len(rarity) == 0 || len(cvc) == 0 {
-		c.JSON(http.StatusInternalServerError, result.ParamErr)
+		c.JSON(http.StatusInternalServerError, status.ParamErr)
 		return
 	}
 	soldier, err := service.SoldierFindALLCycUnlockHandler(rarity, cvc, unlockArena)
@@ -73,7 +74,7 @@ func SoldierFindALLCycUnlock(c *gin.Context) {
 		log.Print(err)
 		return
 	}
-	c.JSON(http.StatusOK, result.OK.WithData(soldier))
+	c.JSON(http.StatusOK, status.OK.WithData(soldier))
 }
 
 /*
@@ -83,7 +84,7 @@ func SoldierFindALLCycUnlock(c *gin.Context) {
 func SoldierFindByCyc(c *gin.Context) {
 	cvc := c.Query("cvc")
 	if len(cvc) == 0 {
-		c.JSON(http.StatusInternalServerError, result.ParamErr)
+		c.JSON(http.StatusInternalServerError, status.ParamErr)
 	}
 	soldier, err := service.SoldierFindByCycHandler(cvc)
 	if err != nil {
@@ -91,7 +92,7 @@ func SoldierFindByCyc(c *gin.Context) {
 		log.Print(err)
 		return
 	}
-	c.JSON(http.StatusOK, result.OK.WithData(soldier))
+	c.JSON(http.StatusOK, status.OK.WithData(soldier))
 }
 
 /*
@@ -101,7 +102,7 @@ func SoldierFindByCyc(c *gin.Context) {
 func SoldierEachStage(c *gin.Context) {
 	unlockArena := c.Query("unlockArena")
 	if len(unlockArena) == 0 {
-		c.JSON(http.StatusInternalServerError, result.ParamErr)
+		c.JSON(http.StatusInternalServerError, status.ParamErr)
 	}
 	soldier, err := service.SoldierEachStageHandler(unlockArena)
 	if err != nil {
@@ -109,5 +110,5 @@ func SoldierEachStage(c *gin.Context) {
 		log.Print(err)
 		return
 	}
-	c.JSON(http.StatusOK, result.OK.WithData(soldier))
+	c.JSON(http.StatusOK, status.OK.WithData(soldier))
 }
