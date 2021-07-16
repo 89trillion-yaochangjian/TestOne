@@ -86,6 +86,10 @@ go build
 ./app --path /Users/yaochangjian/go/src/AnalyseFile/conf/soldier.json
 `
 
+#### 8. 流程图
+![fdews](流程图.png "流程图")
+
+
 
 
 

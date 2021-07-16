@@ -1,4 +1,4 @@
-package StructInfo
+package model
 
 type Soldier struct {
 	//定义士兵配置

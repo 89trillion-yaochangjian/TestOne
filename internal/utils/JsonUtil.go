@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"AnalyseFile/StructInfo"
+	"AnalyseFile/internal/model"
 	"fmt"
 	"github.com/spf13/pflag"
 	"log"
@@ -12,18 +12,18 @@ import (
 	"io/ioutil"
 )
 
-var Event map[string]StructInfo.Soldier
+var Event map[string]model.Soldier
 
-func ReadJsonUtil() *StructInfo.Response {
+func ReadJsonUtil() *model.Response {
 	// 获取到当前目录
 	pwd, err1 := os.Getwd()
 	if err1 != nil {
 		log.Print("获取文件路径失败")
-		return StructInfo.FilePathErr
+		return model.FilePathErr
 	}
 	fmt.Println(pwd)
 	//文件路径拼接
-	f1 := filepath.Join(pwd, "conf", "newSoldier.json")
+	f1 := filepath.Join(pwd, "config", "newSoldier.json")
 	//获取命令行参数传入的文件路径，返回路径字符串
 	var path string
 	//默认读取解析后文件目录
@@ -33,26 +33,26 @@ func ReadJsonUtil() *StructInfo.Response {
 	b, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Print("JSON文件读取失败")
-		return StructInfo.FileReadErr
+		return model.FileReadErr
 	}
 	err2 := json.Unmarshal(b, &Event)
 	if err2 != nil {
 		log.Print("序列化失败")
-		return StructInfo.UnmarshalErr
+		return model.UnmarshalErr
 	}
 	return nil
 }
 
-func WriteJsonUtil() *StructInfo.Response {
+func WriteJsonUtil() *model.Response {
 	// 获取到当前目录
 	pwd, _ := os.Getwd()
-	f1 := filepath.Join(pwd, "../conf", "newSoldier.json")
+	f1 := filepath.Join(pwd, "../config", "newSoldier.json")
 	// 创建文件
 	filePtr, err := os.Create(f1)
 	// 文件创建异常处理
 	if err != nil {
 		log.Print("文件创建失败")
-		return StructInfo.FileCreateErr
+		return model.FileCreateErr
 	}
 	//结束关闭
 	defer filePtr.Close()
@@ -60,7 +60,7 @@ func WriteJsonUtil() *StructInfo.Response {
 	data, err := json.MarshalIndent(Event, "", "  ")
 	if err != nil {
 		log.Print("序列化失败")
-		return StructInfo.UnmarshalErr
+		return model.UnmarshalErr
 	}
 	filePtr.Write(data)
 	return nil

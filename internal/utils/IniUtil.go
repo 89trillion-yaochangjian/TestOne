@@ -1,26 +1,26 @@
 package utils
 
 import (
-	"AnalyseFile/StructInfo"
+	"AnalyseFile/internal/model"
 	"gopkg.in/ini.v1"
 	"log"
 	"os"
 	"path/filepath"
 )
 
-func IniUtil() (string, *StructInfo.Response) {
+func IniUtil() (string, *model.Response) {
 	// 获取到当前目录
 	pwd, err1 := os.Getwd()
 	if err1 != nil {
-		return "", StructInfo.FilePathErr
+		return "", model.FilePathErr
 	}
 	//文件路径拼接
-	f1 := filepath.Join(pwd, "conf", "app.ini")
+	f1 := filepath.Join(pwd, "config", "app.ini")
 	//解析ini文件
 	cfg, err := ini.Load(f1)
 	if err != nil {
 		log.Print("JSON文件读取失败")
-		return "", StructInfo.FileReadErr
+		return "", model.FileReadErr
 	}
 	//获取制定端口
 	httpPort := cfg.Section("server").Key("HttpPort").String()
