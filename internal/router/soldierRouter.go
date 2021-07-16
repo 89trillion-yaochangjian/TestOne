@@ -20,5 +20,4 @@ func Router() {
 	r.GET("/SoldierEachStage", ctrl.SoldierEachStage)
 	httpPort, _ := utils.IniUtil()
 	r.Run(":" + httpPort)
-
 }
