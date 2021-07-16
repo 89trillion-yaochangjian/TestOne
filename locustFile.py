@@ -18,3 +18,4 @@ class QuickstartUser(HttpUser):
     @task
     def SoldierEachStage(self):
         self.client.get("/SoldierEachStage?unlockArena=4")
+
