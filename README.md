@@ -8,32 +8,37 @@
 ```
 .
 ├── README.md
-├── StructInfo
-│   ├── Soldier.go
-│   └── ginResult.go
 ├── __pycache__
 │   └── locustfile.cpython-39.pyc
 ├── app
 │   ├── app
-│   └── httpServer.go
-├── conf
-│   ├── app.ini
-│   ├── newSoldier.json
-│   └── soldier.json
+│   └── main.go
+├── go.mod
+├── go.sum
 ├── internal
+│   ├── config
+│   │   ├── app.ini
+│   │   ├── newSoldier.json
+│   │   └── soldier.json
 │   ├── ctrl
 │   │   └── soldierCrtrl.go
-│   ├── handler
-│   │   ├── soldierHandler.go
-│   │   └── soldierHandler_test.go
+│   ├── model
+│   │   └── soldier.go
 │   ├── router
 │   │   └── soldierRouter.go
+│   ├── service
+│   │   ├── soldierService.go
+│   │   └── soldierService_test.go
+│   ├── status
+│   │   └── ginResult.go
 │   └── utils
-│       ├── IniUtil.go
-│       ├── JsonUtil.go
-│       └── PathUtil.go
+│       ├── iniUtil.go
+│       └── jsonUtil.go
 ├── locustFile.py
-└── report.html
+├── report.html
+└── 流程图.png
+
+
 
 
 
@@ -44,13 +49,14 @@
 
 |层|文件夹|主要职责|调用关系|其他说明|
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|应用层 |app/httpServer.go  |服务器启动 |调用路由层工具层   |不可同层调用
-|路由层 |internal/router/soldierRouter  |路由转发 | 调用工具层 控制层 被应用层   |不可同层调用
-|控制层 |internal/ctrl/soldierCrtrl  |请求参数处理，响应 | 调用handler层 被路由层调用    |不可同层调用
-|handler层 |internal/handler/soldierHandler  |处理具体业务 | 调用工具层，被控制层调用    |不可同层调用
+|应用层 |app/main.go  |服务器启动 |调用路由层工具层   |不可同层调用
+|路由层 |internal/router  |路由转发 | 调用工具层 控制层 被应用层   |不可同层调用
+|控制层 |internal/ctrl |请求参数处理，响应，参数校验 | 调用service层 被路由层调用    |不可同层调用
+|service层 |internal/service  |处理具体业务 | 调用工具层，被控制层调用    |不可同层调用
+|model层 |internal/model |定义结构体 | 被service调用    |不可同层调用
+|status层 |internal/status  |定义状态码 | 调用控制层调用    |不可同层调用
 |工具层  |internal/utils  |文件处理 | 被路由层 ，handler层  |不可同层调用
-| 配置文件 |conf  |文件存储 | 不存在调用关系    |不可同层调用
-
+| 配置文件 |internal/config  |文件存储 | 不存在调用关系    |不可同层调用
 #### 4.存储设计
 
 读取的数据使用map存储，来源json配置文件，ID 为key string类型，value为士兵的结构体
